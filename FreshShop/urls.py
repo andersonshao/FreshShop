@@ -13,15 +13,24 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.views.static import serve
-# from django.contrib import admin
+from rest_framework.documentation import include_docs_urls
+from rest_framework.routers import DefaultRouter
 import xadmin
 
 from FreshShop.settings import MEDIA_ROOT
+from goods import views
+
+# Create a router and register our viewsets with it.
+router = DefaultRouter()
+router.register(r'goods', views.GoodsViewSet)
 
 urlpatterns = [
+    url(r'^', include(router.urls)),
     url(r'^xadmin/', xadmin.site.urls),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^docs/', include_docs_urls(title='生鲜电商')),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
 
 ]
