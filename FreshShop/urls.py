@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.views.static import serve
+from django.views.generic import TemplateView
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
 import xadmin
@@ -29,6 +30,7 @@ router.register(r'goods', views.GoodsViewSet)
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^xadmin/', xadmin.site.urls),
+    url(r'^robots.txt/$', TemplateView.as_view(template_name='robots.txt'), name='robots'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^docs/', include_docs_urls(title='生鲜电商')),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
