@@ -19,7 +19,7 @@ for goods_detail in row_data:
     goods.shop_price = float(int(goods_detail["sale_price"].replace("￥", "").replace("元", "")))
     goods.goods_brief = goods_detail["desc"] if goods_detail["desc"] is not None else ""
     goods.goods_desc = goods_detail["goods_desc"] if goods_detail["goods_desc"] is not None else ""
-    goods.cover = goods_detail["images"][0] if goods_detail["images"] else ""
+    goods.goods_front_image = goods_detail["images"][0] if goods_detail["images"] else ""
 
     category_name = goods_detail["categorys"][-1]
     category = GoodsCategory.objects.filter(name=category_name)

@@ -4,19 +4,19 @@ import xadmin
 
 
 class GoodsCategoryAdmin(object):
-    list_display = ['name', 'code', 'desc', 'category_type', 'parent_category', 'is_tab', 'add_time']
+    list_display = ['id', 'name', 'code', 'desc', 'category_type', 'parent_category', 'is_tab', 'add_time']
     list_editable = list_display
-    search_fields = ['name', 'desc', 'category_type', 'parent_category']
+    search_fields = ['name', 'desc']
     list_filter = ['code', 'desc', 'category_type', 'is_tab', 'add_time']
     ordering = ['-add_time']
     refresh_times = [3, 5]
 
 
 class GoodsAdmin(object):
-    list_display = ['category', 'goods_sn', 'name', 'click_num', 'sold_num', 'fav_num', 'goods_num', 'market_price', 'shop_price', 'goods_brief', 'goods_desc', 'cover', 'ship_free', 'is_new', 'is_hot', 'add_time']
+    list_display = ['name', 'category', 'goods_brief', 'goods_front_image', 'ship_free', 'is_new', 'is_hot', 'add_time']
     list_editable = list_display
-    search_fields = ['category', 'goods_sn', 'name', 'goods_brief', 'goods_desc']
-    list_filter = ['goods_sn', 'name', 'click_num', 'sold_num', 'fav_num', 'goods_num', 'market_price', 'shop_price', 'goods_brief', 'goods_desc', 'ship_free', 'is_new', 'is_hot', 'add_time']
+    search_fields = ['name', 'goods_brief', 'goods_desc']
+    list_filter = ['category',  'goods_brief', 'goods_desc', 'ship_free', 'is_new', 'is_hot', 'add_time']
     ordering = ['-click_num']
     readonly_fields = ['fav_num']
     model_icon = 'fa fa-bitbucket'

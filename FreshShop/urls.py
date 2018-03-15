@@ -25,7 +25,8 @@ from goods import views
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
-router.register(r'goods', views.GoodsViewSet)
+router.register(r'goods', views.GoodsViewSet, base_name='goods')
+router.register(r'categories', views.CategoryViewSet, base_name='categories')
 
 urlpatterns = [
     url(r'^', include(router.urls)),
