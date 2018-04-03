@@ -168,3 +168,7 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
+
+REGX_MOBILE = "^1[358]\d{9}|147\d{8}|176\d{8}"
+
+API_KEY = '39274892d11133e9d5e0221a8cb95ea1'

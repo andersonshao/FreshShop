@@ -23,12 +23,14 @@ from rest_framework_jwt.views import obtain_jwt_token
 import xadmin
 
 from FreshShop.settings import MEDIA_ROOT
-from goods import views
+from goods import views as goods_views
+from users import views as users_views
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
-router.register(r'goods', views.GoodsViewSet, base_name='goods')
-router.register(r'categories', views.CategoryViewSet, base_name='categories')
+router.register(r'goods', goods_views.GoodsViewSet, base_name='goods')
+router.register(r'categories', goods_views.CategoryViewSet, base_name='categories')
+router.register(r'codes', users_views.SmsCodeViewSet, base_name='codes')
 
 urlpatterns = [
     url(r'^', include(router.urls)),
