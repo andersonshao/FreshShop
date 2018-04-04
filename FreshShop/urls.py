@@ -31,6 +31,7 @@ router = DefaultRouter()
 router.register(r'goods', goods_views.GoodsViewSet, base_name='goods')
 router.register(r'categories', goods_views.CategoryViewSet, base_name='categories')
 router.register(r'codes', users_views.SmsCodeViewSet, base_name='codes')
+router.register(r'users', users_views.UserRegViewset, base_name='users')
 
 urlpatterns = [
     url(r'^', include(router.urls)),
