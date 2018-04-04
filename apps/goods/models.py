@@ -73,7 +73,7 @@ class GoodsImage(models.Model):
     """
     商品轮播图
     """
-    goods = models.ForeignKey(Goods, verbose_name='商品')
+    goods = models.ForeignKey(Goods, verbose_name='商品', related_name='images')
     image = models.ImageField(upload_to='', verbose_name='图片', max_length=200, null=True, blank=True)
     image_url = models.CharField(max_length=200, verbose_name='图片url', null=True, blank=True)
     add_time = models.DateTimeField(default=datetime.now, verbose_name='添加时间')

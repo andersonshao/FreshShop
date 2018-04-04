@@ -25,6 +25,7 @@ import xadmin
 from FreshShop.settings import MEDIA_ROOT
 from goods import views as goods_views
 from users import views as users_views
+from operation import views as operation_views
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
@@ -32,6 +33,7 @@ router.register(r'goods', goods_views.GoodsViewSet, base_name='goods')
 router.register(r'categories', goods_views.CategoryViewSet, base_name='categories')
 router.register(r'codes', users_views.SmsCodeViewSet, base_name='codes')
 router.register(r'users', users_views.UserRegViewset, base_name='users')
+router.register(r'userfavs', operation_views.UserFavViewSet, base_name='userfavs')
 
 urlpatterns = [
     url(r'^', include(router.urls)),
