@@ -36,7 +36,7 @@ class UserNotes(models.Model):
     message_type = models.IntegerField(verbose_name='留言类型', choices=MESSAGE_TYPE, default=1)
     subject = models.CharField(max_length=100, verbose_name='留言主题', default='')
     message = models.TextField(default='', verbose_name='留言内容', help_text='留言内容')
-    file = models.FileField(verbose_name='上传文件', help_text='上传文件')
+    file = models.FileField(verbose_name='上传文件', help_text='上传文件', upload_to='notes/images/')
     add_time = models.DateTimeField(default=datetime.now, verbose_name='添加时间')
 
     class Meta:
@@ -44,11 +44,13 @@ class UserNotes(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.user.subject
+        return self.subject
 
 
 class UserAddress(models.Model):
     user = models.ForeignKey(User, verbose_name='买家')
+    province = models.CharField(max_length=100, verbose_name='省份', default='')
+    city = models.CharField(max_length=100, verbose_name='城市', default='')
     district = models.CharField(max_length=100, verbose_name='区域', default='')
     address = models.CharField(max_length=100, verbose_name='地址', default='')
     signer_name = models.CharField(max_length=20, verbose_name='签收人', default='')
@@ -60,4 +62,4 @@ class UserAddress(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.user.address
+        return self.address

@@ -3,16 +3,19 @@ from random import choice
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 from django.contrib.auth import get_user_model
-from rest_framework.mixins import CreateModelMixin
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_jwt.serializers import jwt_encode_handler, jwt_payload_handler
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import SessionAuthentication
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from utils.yunpian import YunPian
 from FreshShop.settings import API_KEY
 from .models import VerifyCode
-from .serializers import SmsSerializers, UserRegSerializer
+from .serializers import SmsSerializers, UserRegSerializer, UserDetailSerializer
 
 
 User = get_user_model()
@@ -67,9 +70,11 @@ class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
             }, status=status.HTTP_201_CREATED)
 
 
-class UserRegViewset(CreateModelMixin, viewsets.GenericViewSet):
+class UserViewSet(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, viewsets.GenericViewSet):
     serializer_class = UserRegSerializer
     queryset = User.objects.all()
+    permission_classes = (IsAuthenticated, )
+    authentication_classes = (SessionAuthentication, JSONWebTokenAuthentication)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -77,7 +82,6 @@ class UserRegViewset(CreateModelMixin, viewsets.GenericViewSet):
         user = self.perform_create(serializer)
 
         re_dict = serializer.data
-
         payload = jwt_payload_handler(user)
         re_dict['token'] = jwt_encode_handler(payload)
         re_dict['name'] = user.name if user.name else user.username
@@ -87,3 +91,20 @@ class UserRegViewset(CreateModelMixin, viewsets.GenericViewSet):
 
     def perform_create(self, serializer):
         return serializer.save()
+
+    def get_object(self):
+        return self.request.user
+
+    def get_permissions(self):
+        if self.action == 'retrieve':
+            return [IsAuthenticated()]
+        elif self.action == 'create':
+            return []
+        return []
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return UserDetailSerializer
+        elif self.action == 'create':
+            return UserRegSerializer
+        return UserDetailSerializer

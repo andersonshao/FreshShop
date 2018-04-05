@@ -10,7 +10,7 @@ class UserFavAdmin(object):
 
 
 class UserAddressAdmin(object):
-    list_display = ['user', 'district', 'address', 'signer_name', 'signer_mobile', 'add_time']
+    list_display = ['user', 'province', 'city', 'district', 'address', 'signer_name', 'signer_mobile', 'add_time']
     search_fields = ['user', 'district', 'address', 'signer_name', 'signer_mobile']
     list_filter = list_display
 

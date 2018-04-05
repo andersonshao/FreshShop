@@ -26,14 +26,19 @@ from FreshShop.settings import MEDIA_ROOT
 from goods import views as goods_views
 from users import views as users_views
 from operation import views as operation_views
+from trade import views as trade_views
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
 router.register(r'goods', goods_views.GoodsViewSet, base_name='goods')
 router.register(r'categories', goods_views.CategoryViewSet, base_name='categories')
 router.register(r'codes', users_views.SmsCodeViewSet, base_name='codes')
-router.register(r'users', users_views.UserRegViewset, base_name='users')
+router.register(r'users', users_views.UserViewSet, base_name='users')
 router.register(r'userfavs', operation_views.UserFavViewSet, base_name='userfavs')
+router.register(r'messages', operation_views.UserNotesViewSet, base_name='messages')
+router.register(r'address', operation_views.UserAddressViewSet, base_name='address')
+router.register(r'shopcarts', trade_views.ShoppingCartViewSet, base_name='shopcarts')
+router.register(r'orders', trade_views.OrderViewSet, base_name='orders')
 
 urlpatterns = [
     url(r'^', include(router.urls)),
@@ -42,7 +47,7 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', token_view.obtain_auth_token),
     url(r'^login/', obtain_jwt_token),
-    url(r'^docs/', include_docs_urls(title='生鲜电商')),
+    url(r'^docs/', include_docs_urls(title='ANDERSON生鲜超市')),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
 
 ]

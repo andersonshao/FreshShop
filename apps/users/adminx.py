@@ -9,8 +9,8 @@ class BaseSetting(object):
 
 
 class GlobalSettings(object):
-    site_title = '生鲜电商'
-    site_footer = '生鲜电商'
+    site_title = '生鲜超市'
+    site_footer = '生鲜超市'
     # menu_style = 'accordion'
 
 

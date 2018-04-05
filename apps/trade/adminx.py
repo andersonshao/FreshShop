@@ -4,18 +4,18 @@ import xadmin
 
 
 class ShoppingCartAdmin(object):
-    list_display = ['user', 'goods', 'goods_num', 'add_time']
+    list_display = ['user', 'goods', 'nums', 'add_time']
     list_editable = list_display
     search_fields = ['user', 'goods']
     list_filter = list_display
-    ordering = ['-goods_num']
+    ordering = ['-nums']
     refresh_times = [3, 5]
 
 
 class OrderInfoAdmin(object):
-    list_display = ['user', 'order_sn', 'trade_no', 'pay_status', 'notes', 'order_mount', 'pay_time', 'add_time']
+    list_display = ['user', 'order_sn', 'trade_no', 'pay_status', 'post_script', 'total_price', 'pay_time', 'add_time']
     list_editable = list_display
-    search_fields = ['user', 'notes']
+    search_fields = ['user', 'post_script']
     list_filter = list_display
     ordering = ['-pay_time']
     readonly_fields = ['order_sn', 'trade_no']
