@@ -39,6 +39,8 @@ router.register(r'messages', operation_views.UserNotesViewSet, base_name='messag
 router.register(r'address', operation_views.UserAddressViewSet, base_name='address')
 router.register(r'shopcarts', trade_views.ShoppingCartViewSet, base_name='shopcarts')
 router.register(r'orders', trade_views.OrderViewSet, base_name='orders')
+router.register(r'banners', goods_views.BannerViewSet, base_name='banners')
+router.register(r'indexgoods', goods_views.IndexCategoryViewSet, base_name='indexgoods')
 
 urlpatterns = [
     url(r'^', include(router.urls)),

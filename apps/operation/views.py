@@ -31,6 +31,12 @@ class UserFavViewSet(viewsets.ModelViewSet):
             return UserFavSerializer
         return UserFavSerializer
 
+    def perform_destroy(self, instance):
+        goods = instance.goods
+        goods.fav_num -= 1
+        goods.save()
+        instance.delete()
+
 
 class UserNotesViewSet(viewsets.ModelViewSet):
     serializer_class = UserNotesSerializer

@@ -29,7 +29,7 @@ class GoodsCategory(models.Model):
 
 
 class GoodsCategoryBrand(models.Model):
-    category = models.ForeignKey(GoodsCategory, verbose_name='商品类别', null=True, blank=True)
+    category = models.ForeignKey(GoodsCategory, verbose_name='商品类别', null=True, blank=True, related_name='brands')
     name = models.CharField(max_length=30, default='', verbose_name='品牌名', help_text='品牌名')
     desc = models.TextField(default='', verbose_name='品牌描述', help_text='品牌描述')
     image = models.ImageField(upload_to='brands/images', verbose_name='品牌图片', max_length=200)
@@ -91,12 +91,24 @@ class Banner(models.Model):
     轮播的商品
     """
     goods = models.ForeignKey(Goods, verbose_name='商品')
-    image = models.ImageField(upload_to='banner', verbose_name='图片', max_length=200)
+    image = models.ImageField(upload_to='banners', verbose_name='图片', max_length=200)
     index = models.IntegerField(default=0, verbose_name='顺序')
     add_time = models.DateTimeField(default=datetime.now, verbose_name='添加时间')
 
     class Meta:
         verbose_name = '轮播图'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.goods.name
+
+
+class IndexAd(models.Model):
+    category = models.ForeignKey(GoodsCategory, verbose_name='商品类别', related_name='category', on_delete=models.CASCADE)
+    goods = models.ForeignKey(Goods, verbose_name='商品', on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = '首页广告'
         verbose_name_plural = verbose_name
 
     def __str__(self):

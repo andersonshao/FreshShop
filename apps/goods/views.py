@@ -1,10 +1,12 @@
 from rest_framework import viewsets
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
+from rest_framework import mixins
+from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 
-from .models import Goods, GoodsCategory
-from .serializers import GoodsSerializer, CategorySerializer
+from .models import Goods, GoodsCategory, Banner
+from .serializers import GoodsSerializer, CategorySerializer, BannerSerializer, IndexCategorySerializer
 from .filters import GoodsFilter
 
 
@@ -29,6 +31,13 @@ class GoodsViewSet(viewsets.ReadOnlyModelViewSet):
     ordering = ('-goods_num', )
     pagination_class = StandardResultsSetPagination
 
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.click_num += 1
+        instance.save()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -40,3 +49,13 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     filter_fields = ['category_type']
     ordering_fields = ['add_time']
     ordering = ('id', )
+
+
+class BannerViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = BannerSerializer
+    queryset = Banner.objects.order_by('index')
+
+
+class IndexCategoryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = IndexCategorySerializer
+    queryset = GoodsCategory.objects.filter(is_tab=True, name__in=['酒水饮料', '粮油副食'])

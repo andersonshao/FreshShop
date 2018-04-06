@@ -1,4 +1,4 @@
-from .models import GoodsCategory, Goods, GoodsCategoryBrand, GoodsImage, Banner
+from .models import GoodsCategory, Goods, GoodsCategoryBrand, GoodsImage, Banner, IndexAd
 
 import xadmin
 
@@ -13,7 +13,7 @@ class GoodsCategoryAdmin(object):
 
 
 class GoodsAdmin(object):
-    list_display = ['name', 'category', 'goods_brief', 'goods_front_image', 'ship_free', 'is_new', 'is_hot', 'add_time']
+    list_display = ['name', 'category', 'click_num', 'ship_free', 'fav_num', 'is_hot', 'add_time']
     list_editable = list_display
     search_fields = ['name', 'goods_brief', 'goods_desc']
     list_filter = ['category',  'goods_brief', 'goods_desc', 'ship_free', 'is_new', 'is_hot', 'add_time']
@@ -29,6 +29,12 @@ class GoodsCategoryBrandAdmin(object):
     search_fields = ['category', 'name', 'desc']
     list_filter = list_display
 
+    def get_context(self):
+        context = super(GoodsCategoryBrandAdmin, self).get_context()
+        if 'form' in context:
+            context['form'].fields['category'].queryset = GoodsCategory.objects.filter(category_type=1, name__in=['酒水饮料', '粮油副食'])
+        return context
+
 
 class GoodsImageAdmin(object):
     list_display = ['goods', 'image', 'image_url', 'add_time']
@@ -42,8 +48,20 @@ class BannerAdmin(object):
     list_filter = list_display
 
 
+class IndexAdAdmin(object):
+    list_display = ['goods', 'category']
+
+    def get_context(self):
+        context = super(IndexAdAdmin, self).get_context()
+        if 'form' in context:
+            context['form'].fields['category'].queryset = GoodsCategory.objects.filter(category_type=1, name__in=['酒水饮料', '粮油副食'])
+            context['form'].fields['goods'].queryset = Goods.objects.filter()
+        return context
+
+
 xadmin.site.register(GoodsCategory, GoodsCategoryAdmin)
 xadmin.site.register(Goods, GoodsAdmin)
 xadmin.site.register(GoodsCategoryBrand, GoodsCategoryBrandAdmin)
 xadmin.site.register(GoodsImage, GoodsImageAdmin)
 xadmin.site.register(Banner, BannerAdmin)
+xadmin.site.register(IndexAd, IndexAdAdmin)
