@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'rest_framework.authtoken',
-
+    'social_django',
 ]
 
 AUTH_USER_MODEL = 'users.UserProfile'
@@ -82,6 +82,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -101,6 +103,16 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'root',
 
+    }
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
     }
 }
 
@@ -125,7 +137,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackends',
-
+    'social_core.backends.weibo.WeiboOAuth2',
+    # 'social_core.backends.qq.QQOAuth2',
+    # 'social_core.backends.weixin.WeixinOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 
@@ -159,7 +174,19 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework.authentication.TokenAuthentication',
         # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    )
+    ),
+    # 'DEFAULT_THROTTLE_CLASSES': (
+    #     'rest_framework.throttling.AnonRateThrottle',
+    #     'rest_framework.throttling.UserRateThrottle'
+    # ),
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'anon': '100/day',
+    #     'user': '1000/day'
+    # }
+}
+
+REST_FRAMEWORK_EXTENSIONS = {
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 5,
 }
 
 import datetime
@@ -173,3 +200,15 @@ REGX_MOBILE = "^1[358]\d{9}|147\d{8}|176\d{8}"
 
 # 云片网发送验证码
 API_KEY = '39274892d11133e9d5e0221a8cb95ea1'
+
+# 第三方登录相关
+SOCIAL_AUTH_WEIBO_KEY = '2321915185'
+SOCIAL_AUTH_WEIBO_SECRET = '1b0c20ab487b4a12941917b4c3caae4a'
+
+# SOCIAL_AUTH_QQ_KEY = 'foobar'
+# SOCIAL_AUTH_QQ_SECRET = 'bazqux'
+#
+# SOCIAL_AUTH_WEIXIN_KEY = 'foobar'
+# SOCIAL_AUTH_WEIXIN_SECRET = 'bazqux'
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'

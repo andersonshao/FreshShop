@@ -44,6 +44,7 @@ router.register(r'indexgoods', goods_views.IndexCategoryViewSet, base_name='inde
 
 urlpatterns = [
     url(r'^', include(router.urls)),
+    url(r'^', include('social_django.urls', namespace='social')),
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^robots.txt/$', TemplateView.as_view(template_name='robots.txt'), name='robots'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),

@@ -4,6 +4,8 @@ from rest_framework import filters
 from rest_framework import mixins
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
+from rest_framework_extensions.cache.mixins import CacheResponseMixin
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 
 from .models import Goods, GoodsCategory, Banner
 from .serializers import GoodsSerializer, CategorySerializer, BannerSerializer, IndexCategorySerializer
@@ -17,7 +19,7 @@ class StandardResultsSetPagination(PageNumberPagination):
     max_page_size = 100
 
 
-class GoodsViewSet(viewsets.ReadOnlyModelViewSet):
+class GoodsViewSet(CacheResponseMixin, viewsets.ReadOnlyModelViewSet):
     """
     This viewset automatically provides `list` and `detail` actions.
     并且实现过滤、搜索和排序
@@ -27,9 +29,10 @@ class GoodsViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_class = GoodsFilter
     search_fields = ['name', 'goods_brief', 'goods_desc']
-    ordering_fields = ['click_num', 'sold_num', 'fav_num', 'goods_num', 'market_price', 'shop_price', 'add_time']
+    ordering_fields = ['market_price', 'shop_price']
     ordering = ('-goods_num', )
     pagination_class = StandardResultsSetPagination
+    throttle_classes = (UserRateThrottle, AnonRateThrottle)
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
