@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
     'social_django',
+    'raven.contrib.django.raven_compat',
+
 ]
 
 AUTH_USER_MODEL = 'users.UserProfile'
@@ -212,3 +214,13 @@ SOCIAL_AUTH_WEIBO_SECRET = '1b0c20ab487b4a12941917b4c3caae4a'
 # SOCIAL_AUTH_WEIXIN_SECRET = 'bazqux'
 
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+
+import os
+import raven
+
+RAVEN_CONFIG = {
+    'dsn': 'http://85df48120c6a4c3d9733b1e50abfd269:35a96a32686e4f22a8e548d9462c560b@127.0.0.1:9000/2',
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    # 'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
+}
