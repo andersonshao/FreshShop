@@ -23,6 +23,14 @@ class GoodsAdmin(object):
     refresh_times = [3, 5]
     style_fields = {'goods_desc': 'ueditor'}
 
+    class GoodsImageInline(object):
+        model = GoodsImage
+        exclude = ['add_time']
+        extra = 1
+        style = 'tab'
+
+    inlines = [GoodsImageInline]
+
 
 class GoodsCategoryBrandAdmin(object):
     list_display = ['category', 'name', 'desc', 'image', 'add_time']
@@ -36,10 +44,10 @@ class GoodsCategoryBrandAdmin(object):
         return context
 
 
-class GoodsImageAdmin(object):
-    list_display = ['goods', 'image', 'image_url', 'add_time']
-    search_fields = ['goods']
-    list_filter = list_display
+# class GoodsImageAdmin(object):
+#     list_display = ['goods', 'image', 'image_url', 'add_time']
+#     search_fields = ['goods']
+#     list_filter = list_display
 
 
 class BannerAdmin(object):
@@ -62,6 +70,6 @@ class IndexAdAdmin(object):
 xadmin.site.register(GoodsCategory, GoodsCategoryAdmin)
 xadmin.site.register(Goods, GoodsAdmin)
 xadmin.site.register(GoodsCategoryBrand, GoodsCategoryBrandAdmin)
-xadmin.site.register(GoodsImage, GoodsImageAdmin)
+# xadmin.site.register(GoodsImage, GoodsImageAdmin)
 xadmin.site.register(Banner, BannerAdmin)
 xadmin.site.register(IndexAd, IndexAdAdmin)

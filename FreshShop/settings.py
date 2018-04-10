@@ -27,7 +27,7 @@ SECRET_KEY = 'c+da+wv_^-ld+c%^6j^xf56mkw8$cwh&i+-3^tsfqo_^ijmg6_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -111,7 +111,7 @@ DATABASES = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
+        "LOCATION": "redis://localhost:6379",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -166,6 +166,10 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -213,13 +217,13 @@ SOCIAL_AUTH_WEIBO_SECRET = '1b0c20ab487b4a12941917b4c3caae4a'
 # SOCIAL_AUTH_WEIXIN_KEY = 'foobar'
 # SOCIAL_AUTH_WEIXIN_SECRET = 'bazqux'
 
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/index/'
 
 import os
 import raven
 
 RAVEN_CONFIG = {
-    'dsn': 'http://85df48120c6a4c3d9733b1e50abfd269:35a96a32686e4f22a8e548d9462c560b@127.0.0.1:9000/2',
+    'dsn': 'http://92d2dbb87a8f489dad21ebd54767c583:ec8699ab285d42a6868bf983cd93576f@111.231.111.100:9000/3',
     # If you are using git, you can also automatically configure the
     # release based on the git info.
     # 'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),

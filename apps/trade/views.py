@@ -3,6 +3,7 @@ from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.authentication import SessionAuthentication
+from rest_framework.views import APIView
 
 from utils.permissions import IsOwnerOrReadOnly
 from .serializers import ShoppingCartSerializer, ShoppingCartDetailSerializer, OrderSerializer
@@ -70,3 +71,11 @@ class OrderViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Destro
             shop_cart.delete()
 
         return order
+
+
+class AlipayView(APIView):
+    def get(self, request):
+        pass
+
+    def post(self, request):
+        pass

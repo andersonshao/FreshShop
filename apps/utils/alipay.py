@@ -121,11 +121,10 @@ if __name__ == "__main__":
     processed_query = {}
     ali_sign = query.pop("sign")[0]
 
-
-# 测试用例
+    # 测试用例
     alipay = AliPay(
         # appid在沙箱环境中就可以找到
-        appid="2016091200490210",
+        appid="2016091000481478",
         # 这个值先不管，在与vue的联调中介绍
         app_notify_url="http://127.0.0.1:8000/alipay/return/",
         # 我们自己商户的密钥
@@ -148,7 +147,7 @@ if __name__ == "__main__":
         # 订单标题
         subject="测试订单2",
         # 我们商户自行生成的订单号
-        out_trade_no="20180312mtianyan",
+        out_trade_no="20180401anderson",
         # 订单金额
         total_amount=100,
         # return_url="http://127.0.0.1:8000/alipay/return/"
