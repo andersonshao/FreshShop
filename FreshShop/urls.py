@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.views.static import serve
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views as token_view
@@ -42,13 +43,15 @@ router.register(r'shopcarts', trade_views.ShoppingCartViewSet, base_name='shopca
 router.register(r'orders', trade_views.OrderViewSet, base_name='orders')
 router.register(r'banners', goods_views.BannerViewSet, base_name='banners')
 router.register(r'indexgoods', goods_views.IndexCategoryViewSet, base_name='indexgoods')
+router.register(r'hotsearches', goods_views.HotSearchWordViewSet, base_name='hotsearches')
 
 urlpatterns = [
+    url(r'^index/$', TemplateView.as_view(template_name='index.html'), name='index'),
+    url(r'^favicon.ico$', RedirectView.as_view(url='static/favicon.ico')),
     url(r'^', include(router.urls)),
     url(r'^', include('social_django.urls', namespace='social')),
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^robots.txt/$', TemplateView.as_view(template_name='robots.txt'), name='robots'),
-    url(r'^index/$', TemplateView.as_view(template_name='index.html'), name='index'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', token_view.obtain_auth_token),
     url(r'^login/', obtain_jwt_token),

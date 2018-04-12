@@ -7,8 +7,8 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 
-from .models import Goods, GoodsCategory, Banner
-from .serializers import GoodsSerializer, CategorySerializer, BannerSerializer, IndexCategorySerializer
+from .models import Goods, GoodsCategory, Banner, HotSearchWord
+from .serializers import GoodsSerializer, CategorySerializer, BannerSerializer, IndexCategorySerializer, HotSearchWordSerializer
 from .filters import GoodsFilter
 
 
@@ -62,3 +62,8 @@ class BannerViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 class IndexCategoryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = IndexCategorySerializer
     queryset = GoodsCategory.objects.filter(is_tab=True, name__in=['酒水饮料', '粮油副食'])
+
+
+class HotSearchWordViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = HotSearchWordSerializer
+    queryset = HotSearchWord.objects.all()
