@@ -42,7 +42,7 @@ class GoodsViewSet(CacheResponseMixin, viewsets.ReadOnlyModelViewSet):
         return Response(serializer.data)
 
 
-class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
+class CategoryViewSet(CacheResponseMixin, viewsets.ReadOnlyModelViewSet):
     """
     This viewset automatically provides `list` and `detail` actions.
     """

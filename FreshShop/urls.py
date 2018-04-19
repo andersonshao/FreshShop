@@ -55,7 +55,7 @@ urlpatterns = [
     url(r'^robots.txt/$', TemplateView.as_view(template_name='robots.txt'), name='robots'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', token_view.obtain_auth_token),
-    url(r'^login/', obtain_jwt_token),
+    url(r'^login/$', obtain_jwt_token),
     url(r'^docs/', include_docs_urls(title='ANDERSON生鲜超市')),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
     # url(r'^static/(?P<path>.*)$', serve, {'document_root': STATIC_ROOT}),
